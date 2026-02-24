@@ -1,0 +1,70 @@
+---
+title: "Coal Mining Activity in Kentucky, a Glance at the Confluence of Equity and Sustainability"
+author: "Graham Nystrom"
+date: "02-24-2026"
+output: pdf_document
+urlcolor: blue
+linkcolor: blue
+---
+
+
+
+**Introduction:**\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Two of the United Nations Sustainable Development Goals (#7 and #13) aim to take action against climate change through reducing our emission of greenhouse gasses and promoting the development of more sustainable forms of energy production. On the other hand, two other goals of the United Nations (#8 and #10) aim to reduce inequalities and promote decent work and economic prosperity in the process. To address the climate initiatives of these goals, it is imperative that we begin to consider which forms of energy production need to be transitioned away to allow space for more renewable and less carbon-intensive alternatives. The coal mining industry stands out to me as the most significant form of carbon-intensive energy that we should aim to diminish if we want to meet our sustainability goals. However, as native Eastern Kentuckian, I also understand how heavily the region relies on the coal industry for supporting our local economies, livelihoods, and overall community health. In order to meet the climate initiatives of the SDGs, we must reduce our reliance on coal energy. But we must do so while also making sure to provide decent work, eliminate inequality, and erase any neglect that we might impart on the thousands of Eastern Kentucky communities that rely so heavily on coal mining dollars.\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This project will explore the decline of coal mining in Eastern Kentucky by presenting mining activity data and coal mine employment data from Kentucky across the years. It will also explore the transition away from coal based economies in Eastern Kentucky and discuss the cultural and historical significance of coal mining in Appalachian Kentucky. The Sustainable development goal of focus for this project will be **SDG #8**, which focuses on promoting *decent work and economic growth*, while also attempting to reduce greenhouse gas emissions and transition to cleaner energy alternatives. 
+
+&nbsp;
+
+**Data:**
+
+Below are the first 6 rows, as well as a link to the raw data for each of the data sets I will use to tell my story.  
+
+- [Mining Employment data in Kentucky](https://github.com/nystromgraham/Data-Story-2-MidtermProjectPitch/blob/0421db203973b9c38ba2a156e3a92dd351184402/Average%20Number%20of%20Employees%20-%20New.xlsx): shows the year, the number of workers in underground mines, the number of workers on surface mines, and the total number of coal miners in the US.
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(readr)
+library(dplyr)
+Employment <- read.csv("../../data/Avg_Employees.csv")
+knitr::kable(head(Employment))
+```
+
+
+- [Cumulative Coal Production data](https://github.com/nystromgraham/Data-Story-2-MidtermProjectPitch/blob/0421db203973b9c38ba2a156e3a92dd351184402/Coal%20Production%20-%20New.xlsx): shows the year, the total number of short tons of coal extracted from underground mines, the total number of short tons of coal extracted from surface mines, and the cumulative total number of short tons of coal produced in the US. 
+
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(readr)
+library(dplyr)
+CoalProd <- read.csv("../../data/Coal_Prod.csv")
+knitr::kable(head(CoalProd))
+```
+
+- [Kentucky Mining activity](https://github.com/nystromgraham/Data-Story-2-MidtermProjectPitch/blob/0421db203973b9c38ba2a156e3a92dd351184402/KY_State%20Mines_T.xlsx): shows each mine in the state, its operator, its name, its method of extraction (type), its operational status, its county, and its primary product.
+
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(readr)
+library(dplyr)
+Mines <- read.csv("../../data/KY_Mines.csv")
+knitr::kable(head(Mines))
+```
+
+*All data was collected and compiled by the U.S. Department of Labor’s Mine Safety and Health Administration and was accessed online on 2/23/2026 from their online [Mine Data Retrieval System](https://www.msha.gov/data-and-reports/mine-data-retrieval-system).*
+
+&nbsp;
+
+**Sources:** 
+
+1. [The Decline of Coal Employment in Eastern Kentucky](https://kystats.ky.gov/Blogs/BlogContent/21)
+
+2. [A strategy for employment after coal](https://labor4sustainability.org/files/KYcleanenergy_final_03032016.pdf)
+
+3. [Understanding the cultural complexities of transitioning away from a coal based economy in Eastern Kentucky](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4794041)
+
+4. [A political background of coal mining in Eastern Kentucky](https://www.wbur.org/hereandnow/2024/09/09/coal-eastern-kentucky) 
+
+5. [The history of the region’s reliance on coal](https://www.jstor.org/stable/23369509?seq=1)
+
