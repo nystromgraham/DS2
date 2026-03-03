@@ -383,6 +383,7 @@ Economists Ackerman and Comings predict that investment in the 5 industries abov
 
 # Sources
 
+### **Works Cited**
 Jillson, W. R. (1922). *A History of the Coal Industry in Kentucky.* Register of Kentucky State Historical Society, 20(58), 21–45. http://www.jstor.org/stable/23369509
 
 Kentucky Center for Statistics. (2024). *Employment outcomes of separated coal workers in Kentucky.* https://kystats.ky.gov/Blogs/BlogContent/21
@@ -392,6 +393,11 @@ Ackerman, F., & Comings, T. (2016). *Employment after coal: Creating new jobs in
 Krause, E. (2023) *Job Loss, Selective Migration, and the Accumulation of Disadvantage: Evidence From Appalachia's Coal Country.* http://dx.doi.org/10.2139/ssrn.4794041
 
 Tong, S., & Hagan, A. (2024). *How the fall of the coal industry changed politics in eastern Kentucky.* WBUR. https://www.wbur.org/hereandnow/2024/09/09/coal-eastern-kentucky
+
+### **Data Sources**
+
+All Data used in visualizations comes from the online, open source [Mine Retrieval Data System](https://www.msha.gov/data-and-reports/mine-data-retrieval-system)\
+Specific files used were the **Average Number of employees** report, the **Coal Production** report, and the **Mines Addresses of Records** dataset found under the *Explore MSHA Datasets* heading. 
 
 ---
 
