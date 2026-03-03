@@ -1,0 +1,398 @@
+---
+title: "Kentucky Coal and the Transition away from Mining"
+author: "Graham Nystrom"
+date: "2026-03-03"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(flexdashboard)
+library(dplyr)
+library(knitr)
+```
+
+# Background
+
+## Left Column
+
+### *thanks to coal mining*
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+valueBox("Eastern Kentucky Was Once A Thriving Region")
+```
+
+### **Origins of Kentucky Coal Mining** \ (Jillson, 1922)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The coal fields of Kentucky were first discovered
+by white colinizers in 1755. After pushing native peoples out and settling the land,
+interest in coal began to grow. Kentucky coals don't find their real industrial
+use until 1818 when they began to be used at large scales to smelt iron in furnaces.
+Further industrialization of the local cities of Lexington and Louisville ignited 
+the coal industry for the state by 1853. \
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **1840**: Coal Production = *23,527* tons \
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **1845**: Coal Production = *100,000* tons \
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **1850:** Coal Production = *150,000* tons \
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A massive increase in coal production is seen from
+very early in its extraction history. The onset of the civil war heavily disrupts coal
+production and causes a massive economic depression in the state, providing some of the 
+earliest evidence for the heavy reliance on the coal industry for the prosperity of Eastern Kentuckians. With the onset of industrial tools for extracting coal, production skyrockets by the 1870s and the coal industry establishes itself in Eastern Kentucky as **the exclusive industry and employment option for locals.** 
+
+### **Coal Mining is Heavily Concentrated in the Appalachian Region**
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(lubridate)
+library(tidyr)
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(plotly)
+
+### Load Data, begin filtering
+
+addresses <- read_delim("../data/AddressOfRecord.txt", 
+                 delim = ",",
+                 locale = locale(encoding = "latin1"),
+                 trim_ws = TRUE)
+
+MinesSum <- addresses %>%
+  group_by(STATE, PRIMARY_SIC_CD, MINE_STATUS) %>%
+  summarise(count = n(), .groups = "drop" ) %>% 
+  filter((PRIMARY_SIC_CD %in% c("Coal (Bituminous)",
+                               "Coal (Lignite)", 
+                               "Coal (Anthracite)")))
+
+### Filters to Regions =========================================================
+# We define categorized vectors containing the data we want to classify, use
+# mutate() and case_when() to categorize the data as we need.
+
+Appalachia <- c("Alabama", "Kentucky", "Tennessee", "West Virginia", "North Carolina", "Virginia")
+SE         <- c("Florida", "South Carolina", "Louisiana", "Mississippi", "Georgia", "Arkansas")
+NE         <- c("Maryland", "Pennsylvania", "New Hampshire", "Vermont", "New York", "New Jersey",
+                "Delaware", "Maine", "Rhode Island", "Connecticut", "Massachusetts")
+SW         <- c("Texas", "Arizona", "New Mexico", "California", "Nevada", "Utah", "Oklahoma")
+Midwest    <- c("Ohio", "Indiana", "Michigan", "Illinois", "Minnesota", "Wisconsin",
+                "Iowa", "Kansas", "North Dakota", "South Dakota")
+NW         <- c("Idaho", "Montana", "Wyoming", "Colorado", "Oregon", "Washington", "Alaska")
+
+MinesSumRegion <- MinesSum %>%
+  filter(PRIMARY_SIC_CD %in% c("Coal (Bituminous)", "Coal (Lignite)", "Coal (Anthracite)")) %>%
+  mutate(region = case_when(
+    STATE %in% Appalachia ~ "Appalachia",
+    STATE %in% SE         ~ "Southeast",
+    STATE %in% NE         ~ "Northeast",
+    STATE %in% SW         ~ "Southwest",
+    STATE %in% Midwest    ~ "Midwest",
+    STATE %in% NW         ~ "Northwest",
+    TRUE                  ~ "Other"))
+
+MinesSumRegion <- MinesSumRegion %>% rename(Status = MINE_STATUS)
+
+# case_when allows you to assign already created vector classification based on 
+# data in another column. This function adds a column and assigns it a value 
+# (Appalachia, SE, NE, etc.) based on its "STATE" value (which we have defined in
+# our grouping vectors). If the data in the grouping vectors match the STATE value,
+# the STATE row gets assigned that vector value.
+```
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+
+### Plot Coal mines by Region
+ggplot(MinesSumRegion,
+       aes(x = region,
+           y = count,
+           fill = region)) +
+  geom_col(position = "dodge") +
+  labs(x     = " ",
+       y     = "Number of Mines") +
+  theme_classic()+
+  theme(legend.position = 'none')
+```
+
+
+## Right column
+ 
+ ![](../../images/JillsonWR1922.png){width='70%'}
+
+### **Coal Culture and Transitioning From Coal** (Tong & Hagan, 2024) (Jillson, 1922) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Since the moment Kentucky was settled, coal has been
+the region's heartbeat. Almost every native rural Eastern Kentuckian has roots 
+in the coal industry, most often a father or a grandfather who worked the local mines
+to provide for his family. Spend any time in community with Appalachian folk and
+you will see that coal mining is a source of pride, identity, and a representation
+of bootstrapped success. A recent work from wbur interviewed a Kentucky coal
+miner to try to understand the context for the political leanings of rural Appalachians:
+\ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"*God provided this for us. I want to be a good Steward of [the environment]... But the 'green people', they would love to shut down any kind of fossil fuel production.*"\ 
+- **Compton Scott**
+\ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mr. Scott identifies himself as a environmentalist, yet he also relies on coal mining for his livelihood, just like his father before him, and his father's father before him. This interaction between Scott and the wbur writers reveals the disconnect between political elites trying to manage for a sustainable environmental future and the lived experience for rural working class Kentuckians. Still, it is imperative that we transition away from coal production as a source of energy production if we wish to conserve the environment for our own species preservation. **Careful consideration for the equity and prosperity of coal mining communities across Appalachia is not just important, but absolutely necessary if we wish to create a unified coalition and make lasting changes toward sustainable and prosperous human development.**\
+
+
+# UN Sustainable Development Goals
+
+## Left column
+ ![](../../images/SDGs.jpg){width='80%'}
+
+### **Using SDGs to Address Sustainable and Equitable Developmen in Eastern Kentucky**
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In 2015, the United Nations produced a plan to transform the globe toward sustainable development in order to reverse environmental damage and promote the preservation and stability of our planet as we know it. Within the plan, a series of sustainable development goals (SDGs) are outlined (see above). Two of the United Nations SDGs,**#7** and **#13**, aim to take action against climate change through reducing our emission of greenhouse gasses and promoting the development of more sustainable forms of energy production. On the other hand, two other goals of the United Nations, **#8** and **#10**, aim to reduce inequalities and promote decent work and economic prosperity in the process. **If done effectively, these SDGs will work in tandem to implement the transition away from carbon expensive activities, such as coal mining, while also lifting up communities, such as Eastern Kentucky, that rely on coal mining for their economic prosperity.**
+
+# Progress Assessment
+
+## Left Column 
+
+### *The data suggest progress in our transition to cleaner energy forms and away from carbon expensive coal mining* 
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+valueBox("Adressing SDGs #7 and #13", color="primary")
+```
+
+### **Exploring the Decline of Coal Mining**
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+library(lubridate)
+library(tidyr)
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(plotly)
+
+addresses <- read_delim("../data/AddressOfRecord.txt", 
+                 delim = ",",
+                 locale = locale(encoding = "latin1"),
+                 trim_ws = TRUE)
+
+addresses <- addresses %>% 
+  mutate(MINE_STATUS_DT = mdy(MINE_STATUS_DT)) %>% 
+  mutate(mine_year = year(MINE_STATUS_DT)) %>%
+  filter((PRIMARY_SIC_CD %in% c("Coal (Bituminous)",
+                               "Coal (Lignite)", 
+                               "Coal (Anthracite)")))
+mines <- addresses %>%
+  mutate(status = case_when(MINE_STATUS %in% c('Active') ~ 'active',
+                            MINE_STATUS %in% c('Abandoned', 'Abandoned and Sealed') ~ 'abandoned',
+                            .default = 'other'))
+
+# This renamed and reclassified our column names to be simpler for analyzing
+# check it out
+#mines$status %>% table
+
+# To do what you need to do, I think you need to iterate through each year
+# that means FOR LOOP
+
+# Figure out range of years
+#mines$mine_year %>% range
+# Make a vector of years
+years <- 1925:2026
+
+yi <- 1973 # dummy year to use in coding up the for loop
+mr <- data.frame() # stage an empty dataframe to take results
+
+for(yi in years){ # loop through each year
+  
+  # Get all mines with updates PRIOR to year yi
+  (mini <- mines %>% filter(as.numeric(mine_year) <= yi))
+  # Get all mines with updates AFTER year yi
+  (post_mini <- mines %>% filter(as.numeric(mine_year) > yi))
+  
+  # Get all mines who have come on line prior to this year
+  became_active <- mini %>% filter(mine_year <= yi, status == 'active')
+  
+  # Get all mines currently active that WILL BE ABANDONED in future years
+  will_be_abandoned <- post_mini %>% filter(status %in% c('abandoned', 'other'))
+  
+  # Get all mines that have already been abandoned
+  abandoned <- mini %>% filter(mine_year <= yi, status == 'abandoned')
+  
+  other <- mini %>% filter(mine_year <= yi, status == 'other')
+  
+  # Now save sample sizes
+  mri <-
+    data.frame(year = yi,
+               active = (became_active %>% nrow) + (will_be_abandoned %>% nrow),
+               abandoned = abandoned %>% nrow,
+               other = other %>% nrow)
+  
+  # Print result for this year to help with debugging
+  print(mri)
+  
+  # Add to results dataframe
+  mr <- rbind(mr, mri)
+} # end for loop
+
+# Check out result
+mr
+
+# Pivot to make it plot-able
+mr_long <-
+  mr %>%
+  pivot_longer(cols=active:other,
+               names_to='status',
+               values_to='n')
+
+```
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Plot the above data!! (Thanks Dr. Ezell, you're a genius)
+ggplotly(ggplot(mr_long,
+       aes(x=year,
+           y=n,
+           color=status)) +
+  geom_path(size = 1)+
+  labs(title = "Timeline of Mines Seperated by their Status",
+       y = "Mines",
+       x = "Year")+
+    annotate(geom='text',
+             x=1950, y=1250, 
+             label='Active mines begin\n to decline around 1975 ->')+
+  theme_bw())
+
+```
+
+### **Tracking Coal Production**
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2)
+library(plotly)
+
+CoalProd <- read.csv("../data/Coal_Prod.csv") %>% 
+  select(-c(1,2)) %>% 
+  arrange(desc(Calendar.Year))
+
+colnames(CoalProd) <- c("Year", "Underground_Prod", "Surface_Prod", "Total_Prod")
+
+ggplotly(ggplot(CoalProd,
+                aes(x=Year,
+                    y=Total_Prod))+
+           geom_path(linewidth=1)+
+           scale_y_continuous(labels = scales::comma)+
+           labs(title = "Coal Production Since 2012",
+                y="Total Production (Short Tons)")+
+  theme_bw())
+```
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+
+CoalProd <- read.csv("../data/Coal_Prod.csv") %>% 
+  select(-c(1,2)) %>% 
+  arrange(Calendar.Year)
+
+colnames(CoalProd) <- c("Year", "Underground Prod", "Surface Prod", "Total Prod")
+
+knitr::kable(CoalProd)
+```
+
+## Right Column
+
+### *We still have work to do to address SDGs #8 and #10*
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+valueBox("Adressing SDGs #8 and #10", color="primary")
+```
+
+###
+
+A decline in overall coal production and mining activity shows promising progress towards achieving SDGs #7 and #13 and shifting away from carbon expensive, greenhouse gas emitting coal mining. However, a quick look at mining employment since 2012 shows that a rapid response to declining mining jobs is needed, especially in the many rural and secluded Appalachian communities in which the coal mining industry is the primary employment source. **Further outreach and support for coal mining communities to transition away from a coal based income is needed for any further progress on SDGs #8 and #10**
+
+### **Tracking Mining Employment**
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2)
+library(plotly)
+
+Employment <- read.csv("../data/Avg_Employees.csv")%>% 
+  select(-c(1,2)) %>% 
+  arrange(Year)
+
+colnames(Employment) <- c("Year", "Underground Workers", 
+                          "Surface Workers", "Total Employment")
+
+ggplotly(ggplot(Employment,
+                aes(x=Year,
+                    y=`Total Employment`))+
+           geom_path(linewidth=1)+
+           scale_y_continuous(labels = scales::comma)+
+           labs(title = "Coal Mining Jobs Since 2012",
+                y="Jobs")+
+  theme_bw())
+```
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+
+Employment <- read.csv("../data/Avg_Employees.csv")%>% 
+  select(-c(1,2)) %>% 
+  arrange(Year)
+
+colnames(Employment) <- c("Year", "Underground Workers", 
+                          "Surface Workers", "Total Employment")
+  
+knitr::kable(head(Employment))
+```
+
+# Looking Ahead
+
+##
+
+### (Kentucky Center For Statistics, 2024)
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+valueBox("85% of KY Coal Jobs Lost in 30 Years", color = "primary")
+```
+
+### 
+
+In the 20th century, coal mining accounted for more jobs in Kentucky than any other state in the country. For the Eastern Kentuckian, mining represented a consistent source of income to support a family and earn living wages.Reporting from the Kentucky Center For Statistics claims that *37% of coal workers who get separated from their jobs never go on to find lasting employment*. This reveals a lack of investment in educational opportunities for Eastern Kentuckians and shows how little diversity for employment there is in rural coal mining communities. 
+
+### **Education** (Krouse E., 2023)
+
+Many Eastern Kentuckians are reliant on a boom/bust cycle for their income based on the price of their region's depleting natural resource. Historically, coal mines have provided a relatively high wage job for workers with relatively low levels of educational attainment. This emphasizes the importance of investing in education to support rural Kentuckians.
+
+##
+
+### (Ackerman F. & Comings T., 2016)
+
+```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+valueBox("Employment After Coal", color = "primary")
+```
+
+### **Important Industries for Coal Job Alternatives**
+
+1. Healthcare 
+2. Local Food Production (Farming) 
+3. Sustainable Forestry 
+4. Tourism 
+5. Environmental Remediation 
+
+Economists Ackerman and Comings predict that investment in the 5 industries above would introduce over **24,000 new jobs** to Eastern Kentuckians, bring down regional unemployment to the national average, and promote progress towards meeting #8 and #10 of the Sustainable Development Goals.  
+
+
+# Sources
+
+Jillson, W. R. (1922). *A History of the Coal Industry in Kentucky.* Register of Kentucky State Historical Society, 20(58), 21–45. http://www.jstor.org/stable/23369509
+
+Kentucky Center for Statistics. (2024). *Employment outcomes of separated coal workers in Kentucky.* https://kystats.ky.gov/Blogs/BlogContent/21
+
+Ackerman, F., & Comings, T. (2016). *Employment after coal: Creating new jobs in Eastern Kentucky.* Labor Network for Sustainability. https://labor4sustainability.org/files/KYcleanenergy_final_03032016.pdf
+
+Krause, E. (2023) *Job Loss, Selective Migration, and the Accumulation of Disadvantage: Evidence From Appalachia's Coal Country.* http://dx.doi.org/10.2139/ssrn.4794041
+
+Tong, S., & Hagan, A. (2024). *How the fall of the coal industry changed politics in eastern Kentucky.* WBUR. https://www.wbur.org/hereandnow/2024/09/09/coal-eastern-kentucky
+
+---
+
+
