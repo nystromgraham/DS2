@@ -1,9 +1,11 @@
 ---
-title: "Kentucky Coal and the Transition away from Mining"
+title: "Kentucky Coal and the Transition Away from Mining"
 author: "Graham Nystrom"
 date: "2026-03-03"
 output: 
   flexdashboard::flex_dashboard:
+    theme:
+      bootswatch: minty
     orientation: columns
 editor_options: 
   chunk_output_type: console
@@ -24,10 +26,16 @@ library(knitr)
 
 ## Left Column
 
-### *thanks to coal mining*
+ <div style="text-align: center;">
+![](../../images/JillsonWR1922.png){width=100%}
+</div>
+
+## Right Column
+
+### 
 
 ```{r eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
-valueBox("Eastern Kentucky Was Once A Thriving Region")
+valueBox("Once an Economically Thriving Region")
 ```
 
 ### **Origins of Kentucky Coal Mining** \ (Jillson, 1922)
@@ -44,6 +52,29 @@ the coal industry for the state by 1853. \
 very early in its extraction history. The onset of the civil war heavily disrupts coal
 production and causes a massive economic depression in the state, providing some of the 
 earliest evidence for the heavy reliance on the coal industry for the prosperity of Eastern Kentuckians. With the onset of industrial tools for extracting coal, production skyrockets by the 1870s and the coal industry establishes itself in Eastern Kentucky as **the exclusive industry and employment option for locals.** 
+ 
+# Coal Culture
+
+## Left Column
+
+### **Coal Culture and Transitioning From Coal** (Tong & Hagan, 2024) (Jillson, 1922)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Since the moment Kentucky was settled, coal has been
+the region's heartbeat. Almost every native rural Eastern Kentuckian has roots 
+in the coal industry, most often a father or a grandfather who worked the local mines
+to provide for his family. Spend any time in community with Appalachian folk and
+you will see that coal mining is a source of pride, identity, and a representation
+of bootstrapped success. A recent work from wbur interviewed a Kentucky coal
+miner to try to understand the context for the political leanings of rural Appalachians:
+\ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"*God provided this for us. I want to be a good Steward of [the environment]... But the 'green people', they would love to shut down any kind of fossil fuel production.*"\ 
+- **Compton Scott**
+\ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mr. Scott identifies himself as a environmentalist, yet he also relies on coal mining for his livelihood, just like his father before him, and his father's father before him. This interaction between Scott and the wbur writers reveals the disconnect between political elites trying to manage for a sustainable environmental future and the lived experience for rural working class Kentuckians. Still, it is imperative that we transition away from coal production as a source of energy production if we wish to conserve the environment for our own species preservation. **Careful consideration for the equity and prosperity of coal mining communities across Appalachia is not just important, but absolutely necessary if we wish to create a unified coalition and make lasting changes toward sustainable and prosperous human development.**\
+
+## Right Column 
+
 
 ### **Coal Mining is Heavily Concentrated in the Appalachian Region**
 
@@ -118,34 +149,17 @@ ggplot(MinesSumRegion,
 ```
 
 
-## Right column
- 
- ![](../../images/JillsonWR1922.png){width='70%'}
-
-### **Coal Culture and Transitioning From Coal** (Tong & Hagan, 2024) (Jillson, 1922) 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Since the moment Kentucky was settled, coal has been
-the region's heartbeat. Almost every native rural Eastern Kentuckian has roots 
-in the coal industry, most often a father or a grandfather who worked the local mines
-to provide for his family. Spend any time in community with Appalachian folk and
-you will see that coal mining is a source of pride, identity, and a representation
-of bootstrapped success. A recent work from wbur interviewed a Kentucky coal
-miner to try to understand the context for the political leanings of rural Appalachians:
-\ 
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"*God provided this for us. I want to be a good Steward of [the environment]... But the 'green people', they would love to shut down any kind of fossil fuel production.*"\ 
-- **Compton Scott**
-\ 
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mr. Scott identifies himself as a environmentalist, yet he also relies on coal mining for his livelihood, just like his father before him, and his father's father before him. This interaction between Scott and the wbur writers reveals the disconnect between political elites trying to manage for a sustainable environmental future and the lived experience for rural working class Kentuckians. Still, it is imperative that we transition away from coal production as a source of energy production if we wish to conserve the environment for our own species preservation. **Careful consideration for the equity and prosperity of coal mining communities across Appalachia is not just important, but absolutely necessary if we wish to create a unified coalition and make lasting changes toward sustainable and prosperous human development.**\
-
-
 # UN Sustainable Development Goals
 
 ## Left column
- ![](../../images/SDGs.jpg){width='80%'}
+
+ <div style="text-align: center;">
+![](../../images/SDGs.jpg){width=50%}
+</div>
 
 ### **Using SDGs to Address Sustainable and Equitable Developmen in Eastern Kentucky**
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In 2015, the United Nations produced a plan to transform the globe toward sustainable development in order to reverse environmental damage and promote the preservation and stability of our planet as we know it. Within the plan, a series of sustainable development goals (SDGs) are outlined (see above). Two of the United Nations SDGs,**#7** and **#13**, aim to take action against climate change through reducing our emission of greenhouse gasses and promoting the development of more sustainable forms of energy production. On the other hand, two other goals of the United Nations, **#8** and **#10**, aim to reduce inequalities and promote decent work and economic prosperity in the process. **If done effectively, these SDGs will work in tandem to implement the transition away from carbon expensive activities, such as coal mining, while also lifting up communities, such as Eastern Kentucky, that rely on coal mining for their economic prosperity.**
+
 
 # Progress Assessment
 
